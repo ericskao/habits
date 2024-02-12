@@ -6,9 +6,9 @@ const Header = () => {
       <Link href="/" className="font-semibold text-xl">
         🗓 CorgiCal
       </Link>
-      <div className="flex gap-3">
+      {/* <div className="flex gap-3">
         <Link href="/profile">Profile</Link>
-      </div>
+      </div> */}
     </nav>
   );
 };
