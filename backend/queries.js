@@ -1,13 +1,5 @@
-const humps = require("humps");
-
-const Pool = require("pg").Pool;
-const pool = new Pool({
-  user: "me",
-  host: "localhost",
-  database: "habits_api",
-  password: "password",
-  port: 5432,
-});
+// const humps = require("humps");
+const pool = require("./db");
 
 const getUsers = (request, response) => {
   pool.query("SELECT * FROM users ORDER BY id ASC", (error, results) => {

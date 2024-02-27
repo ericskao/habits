@@ -1,16 +1,18 @@
 import { useMutation, useQuery } from "react-query";
 import apiClient from "../http-common";
 
+const habitsApiUrl = "/api/habits";
+
 export function useHabits() {
   const { data: habits } = useQuery("habits", async () => {
-    const { data } = await apiClient.get("");
+    const { data } = await apiClient.get(habitsApiUrl);
     return data;
   });
 
-  const addTodoMutation = useMutation(
-    async (newHabit: { name: string }) => {
-      const { data } = await apiClient.post("", newHabit);
-      return data;
+  const addHabitMutation = useMutation(
+    async (newHabit) => {
+      console.log(newHabit);
+      const { data } = await apiClient.post(habitsApiUrl, newHabit);
     },
     {
       onSuccess: (data) => {
@@ -20,8 +22,8 @@ export function useHabits() {
     },
   );
 
-  const addHabit = async (newHabit: { name: string }) => {
-    await addTodoMutation.mutateAsync(newHabit);
+  const addHabit = async (newHabit) => {
+    await addHabitMutation.mutateAsync(newHabit);
   };
 
   return { habits, addHabit };

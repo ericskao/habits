@@ -8,17 +8,15 @@ import { useState } from "react";
 const HabitsDashboard = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [name, setName] = useState<string>("");
-  const [quantity, setQuantity] = useState<string | number>("1");
+  const [goalQuantity, setGoalQuantity] = useState<string | number>("1");
   const [quantityType, setQuantityType] = useState<string>("Times");
   const [frequency, setFrequency] = useState<string>("Per Day");
   const [repeatFrequency, setRepeatFrequency] = useState<string>("Daily");
 
   const { habits, addHabit } = useHabits();
-  console.log("habits", habits);
 
   const onSaveHabit = () => {
-    console.log(name, quantity, quantityType, frequency, repeatFrequency);
-    addHabit({ name });
+    addHabit({ name, goalQuantity });
   };
 
   return (
@@ -34,8 +32,8 @@ const HabitsDashboard = () => {
             <NumberInput
               className="w-32"
               label="Goal"
-              value={quantity}
-              onChange={(val) => setQuantity(val)}
+              value={goalQuantity}
+              onChange={(val) => setGoalQuantity(val)}
               min={1}
               max={100}
             />
