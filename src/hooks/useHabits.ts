@@ -15,19 +15,26 @@ type HabitType = {
 export function useHabits() {
   const { data: habits } = useQuery("habits", async () => {
     const { data } = await apiClient.get(habitsApiUrl);
+    console.log("data in get", data);
     return data;
   });
   const queryClient = useQueryClient();
 
   const checkInMutation = useMutation(
     async (habitId: number) => {
-      const { data } = await apiClient.put(
-        `${habitsApiUrl}/${habitId}/checkIn`,
+      const { data } = await apiClient.post(
+        `${habitsApiUrl}/${habitId}/check-in`,
       );
+      return data;
     },
     {
       onSuccess: (response) => {
-        console.log("success", response);
+        queryClient.setQueryData(
+          "habits",
+          habits.map((habit: { id: number }) =>
+            habit.id === response.id ? response : habit,
+          ),
+        );
       },
     },
   );
